@@ -476,24 +476,7 @@ void boundrytraversal(node *tree)
 
 
 	}
-// int lca_bt(node *root,int n1,int n2)
-// 	{
-// 		if(root==NULL)
-// 			return -1;
-// 		if()
 
-
-// 	}
-// void lca(node *tree)
-// 	{
-// 		int node1,node2;
-// 		node1=
-// 		node2=
-// 		int lcanode=lca_bt(tree,node1,node2);
-
-// 		cout<<"LCA of "+node1+" and "+node2+" is "+lcanode+" \n";
-
-// 	}
 int disfromRoot(node* root, int a)
     {
         if(root==NULL)
@@ -538,9 +521,49 @@ int findDist(node* root, int a, int b)
     
 }
 
+int lca_bt(node *root,int a,int b)
+	{
+		if(root==NULL)
+			return -1;
+		if(root->val==a)
+			return a;
+		if(root->val==b)
+			return b;
+		int dislefta=disfromRoot(root->left,a);
+		int disleftb=disfromRoot(root->left,b);
+		if(dislefta>=0 && disleftb>=0)
+		    return lca_bt(root->left,a,b);
+		if(dislefta<0 && disleftb<0)
+		    return lca_bt(root->right,a,b);
+		else
+		    {
+		       return root->val;     
+		        
+		    }
+
+
+
+
+		return -1;
+	}
+void lca(node *tree)
+	{
+		int node1,node2;
+				cout<<"enter node1 \n";
+				cin>>node1;
+				cout<<"enter node2 \n";
+				cin>>node2;
+		// node1=4;
+		// node2=7;
+		int lcanode=lca_bt(tree,node1,node2);
+
+		cout<<"LCA of "<<node1<<" and "<<node2<<" is "<<lcanode<<" \n";
+
+	}
+
 void apls1_bt(node* tree)
 	{
-		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n 14. Min distance between two given nodes of a Binary Tree\n";
+		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n 14. Min distance between two given nodes of a Binary Tree\n 15. LCA (lowest common ancestor) of a Binary Tree\n";
 		int n;
 		cin>>n;
 		if(n==1)
@@ -631,14 +654,7 @@ void apls1_bt(node* tree)
 
 			}
 
-		if(n==13)
-			{
-				cout<<"LCA (lowest common ancestor) of a Binary Tree  \n";
-				// lca(tree);
-				cout<<"\n";
-
-			}
-		if(n==14)
+				if(n==14)
 			{
 				cout<<"Min distance between two given nodes of a Binary Tree   \n";
 				cout<<"enter node1 \n";
@@ -651,6 +667,14 @@ void apls1_bt(node* tree)
 				cout<<"\n";
 
 			}
+			if(n==15)
+			{
+				cout<<"LCA (lowest common ancestor) of a Binary Tree  \n";
+				lca(tree);
+				cout<<"\n";
+
+			}
+
 	}
 
 int main() 
