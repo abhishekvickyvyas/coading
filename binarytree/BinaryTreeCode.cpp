@@ -476,10 +476,71 @@ void boundrytraversal(node *tree)
 
 
 	}
+// int lca_bt(node *root,int n1,int n2)
+// 	{
+// 		if(root==NULL)
+// 			return -1;
+// 		if()
+
+
+// 	}
+// void lca(node *tree)
+// 	{
+// 		int node1,node2;
+// 		node1=
+// 		node2=
+// 		int lcanode=lca_bt(tree,node1,node2);
+
+// 		cout<<"LCA of "+node1+" and "+node2+" is "+lcanode+" \n";
+
+// 	}
+int disfromRoot(node* root, int a)
+    {
+        if(root==NULL)
+            return -1;
+        if(root->val==a)
+            return 0;
+        int leftdis=disfromRoot(root->left,a);
+        int rightdis=disfromRoot(root->right, a);
+        
+        if(leftdis>=0)
+            return leftdis+1;
+        if(rightdis>=0)
+            return rightdis+1;
+        return -1;
+        
+    }
+int findDist(node* root, int a, int b)
+ {
+    // Your code here
+    if(root==NULL)
+        return 0;
+    if(root->val==a)
+        return disfromRoot(root,b);
+    if(root->val==b)
+        return disfromRoot(root,a);
+    
+    int dislefta=disfromRoot(root->left,a);
+    int disleftb=disfromRoot(root->left,b);
+    if(dislefta>=0 && disleftb>=0)
+        return findDist(root->left,a,b);
+    if(dislefta<0 && disleftb<0)
+        return findDist(root->right,a,b);
+    else
+        {
+            if(dislefta>=0)
+                return dislefta+disfromRoot(root->right,b)+2;
+            else
+                return disleftb+disfromRoot(root->right,a)+2;
+                
+            
+        }
+    
+}
 
 void apls1_bt(node* tree)
 	{
-		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n";
+		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n 14. Min distance between two given nodes of a Binary Tree\n";
 		int n;
 		cin>>n;
 		if(n==1)
@@ -570,7 +631,26 @@ void apls1_bt(node* tree)
 
 			}
 
+		if(n==13)
+			{
+				cout<<"LCA (lowest common ancestor) of a Binary Tree  \n";
+				// lca(tree);
+				cout<<"\n";
 
+			}
+		if(n==14)
+			{
+				cout<<"Min distance between two given nodes of a Binary Tree   \n";
+				cout<<"enter node1 \n";
+				int a,b;
+				cin>>a;
+				cout<<"enter node2 \n";
+				cin>>b;
+				cout<<"Min distance between node "<<a<<" and node "<<b<<" of Binary Tree   is \n";
+				cout<< findDist(tree,a,b);
+				cout<<"\n";
+
+			}
 	}
 
 int main() 
