@@ -549,10 +549,10 @@ int lca_bt(node *root,int a,int b)
 void lca(node *tree)
 	{
 		int node1,node2;
-				cout<<"enter node1 \n";
-				cin>>node1;
-				cout<<"enter node2 \n";
-				cin>>node2;
+		cout<<"enter node1 \n";
+		cin>>node1;
+		cout<<"enter node2 \n";
+		cin>>node2;
 		// node1=4;
 		// node2=7;
 		int lcanode=lca_bt(tree,node1,node2);
@@ -561,9 +561,89 @@ void lca(node *tree)
 
 	}
 
+node* mirrorify(node* tree)
+	{
+		if(tree==NULL)
+			{	
+				return tree;
+			}
+		node * tmpNode=createNode(tree->val);
+		tmpNode->left=mirrorify(tree->right);
+
+		tmpNode->right=mirrorify(tree->left);
+
+		return tmpNode;
+
+	}
+
+bool isBalanced(node* root)
+	{
+
+		if(root ==NULL)
+			return true;
+
+
+       bool bl=isBalanced(root->left);
+       bool br=isBalanced(root->right);
+       int hl=hightOfTree(root->left);
+       int hr=hightOfTree(root->right);
+
+       return (bl && br && (abs(hl-hr)<=1));
+
+
+	}
+
+int findIndex(string s,int si,int ei)
+	{
+		if(si>ei)
+			return -1;
+		stack<int> sindex;
+		for(int i=si;i<=ei;i++)
+			{
+				if(s[i]=='(')
+					sindex.push(s[i]);
+				else if(s[i]==')')
+					{
+
+						if(sindex.top()=='(')
+							{
+								sindex.pop();
+							
+								if(sindex.empty())
+									return i;
+						 	 }
+					}
+			}
+
+  return -1;
+	}
+node * contructBtreeWithBracketStr(string s,int si,int ei)
+	{
+		 
+  		// cout<<s<<" \n";
+		 if(si>ei)
+		 	return NULL;
+		 node * root=createNode(s[si]-'0');
+		 int in=-1;
+
+		 if(si+1 <=ei  && s[si+1]=='(')
+		 	 in=findIndex(s,si,ei);
+		
+		if(in!=-1)
+		{
+			root->left=contructBtreeWithBracketStr(s,si+2,in-1);
+		root->right=contructBtreeWithBracketStr(s,in+2,ei-1);
+		 
+
+		}
+	return root;
+		
+
+	}
+
 void apls1_bt(node* tree)
 	{
-		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n 14. Min distance between two given nodes of a Binary Tree\n 15. LCA (lowest common ancestor) of a Binary Tree\n";
+		cout<<"enter operation number\n 1. level order traversal\n 2. reverse level order traversal\n 3. diameter of a Binary tree \n 4. Inorder(recursion + iterative )\n 5. Pre-rder(recursion + iterative )\n 6. Post-order(recursion + iterative\n 7. left view of tree\n 8. right view of tree \n 9. top view of tree\n 10. bottom View of Binary tree is \n 11. zig-zag traversal\n 12. diagonal traversal\n 13. boundry traversal\n 14. Min distance between two given nodes of a Binary Tree\n 15. LCA (lowest common ancestor) of a Binary Tree\n 16. Mirror Binary Tree\n 17. check if Tree is balanced or not\n 18. Construct Binary Tree from String with bracket representation\n";
 		int n;
 		cin>>n;
 		if(n==1)
@@ -674,6 +754,43 @@ void apls1_bt(node* tree)
 				cout<<"\n";
 
 			}
+			if(n==16)
+				{
+					node * rootmirrorNode=NULL;
+					cout<<"Inorder of orignal Binary Tree  \n";
+					inOrder(tree);
+					rootmirrorNode=mirrorify(tree);
+					cout<<"\n";
+					inOrder(rootmirrorNode);
+					cout<<"Inorder of of a mirror Binary Tree  \n";
+					cout<<"\n";	
+					
+
+				}
+			if(n==17)
+				{
+
+					cout<<"check if Tree is balanced or not \n";
+					if(isBalanced(tree))
+						cout<<"Given tree is balanced\n";
+					else
+						cout<<"Given tree is not balanced\n";
+
+
+				}
+			if(n==18)
+				{
+					cout<<"Construct Binary Tree from String with bracket representation\n";
+					string s;
+					cout<<"\n Enter the bracket String\n";
+					// cinn>>s;
+					s="4(2(3)(1))(6(5))";
+					node *treeis;
+					treeis=contructBtreeWithBracketStr(s,0,s.length()-1);
+					cout<<"\nInorder of Constructed Binary Tree  is\n";
+					inOrder(treeis);
+
+				}
 
 	}
 
@@ -693,7 +810,7 @@ int main()
     tree->left->right = createNode(6);
     tree->right->left = createNode(5); 
     tree->right->right = createNode(4);
-
+// tree->right->right->left=createNode(99);
 
     // left right view tree
     // node* tree = createNode(5); 
